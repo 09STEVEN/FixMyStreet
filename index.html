@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix My Street</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+
+    <section id="announcements">
+        <h2>Announcements</h2>
+        <input type="text" id="announcementInput" placeholder="Enter new announcement">
+        <button class="announcementBtn" id="addAnnouncementBtn">Add Announcement</button>
+        <div id="announcementList"></div>
+    </section>
+
+    <section id="forum">
+        <h2>Discussion Forum</h2>
+        <div id="Topic1" class="forum-topic">
+            <h3>Topic 1</h3>
+            <!-- Feedback for Topic 1 will be inserted here -->
+        </div>
+        <div id="Topic2" class="forum-topic">
+            <h3>Topic 2</h3>
+            <!-- Feedback for Topic 2 will be inserted here -->
+        </div>
+    </section>
+
+    <section id="feedback">
+        <h2>Feedback</h2>
+        <form class="feedbackForm" action="#">
+            <label for="topic">Choose Topic:</label><br>
+            <select id="topic" name="topic">
+                <option value="Topic1">Topic 1</option>
+                <option value="Topic2">Topic 2</option>
+            </select><br>
+            <label for="feedback">Your Feedback:</label><br>
+            <textarea id="feedbackInput" name="feedback" rows="4" cols="50"></textarea><br>
+            <input type="button" value="Submit" class="feedbackBtn" id="submitFeedbackBtn">
+        </form>
+    </section>
+
+    <section id="volunteer">
+        <h2>Volunteer Opportunities</h2>
+        <div class="opportunity" id="opportunity1">
+            <h3>Volunteer Opportunity 1</h3>
+            <p>
+
+               Help organize community events and workshops aimed at promoting civic engagement.
+                Flexible hours, weekends preferred.
+                SExcellent communication skills, event planning experience is a plus.</p>
+            <button class="applyBtn">Apply</button>
+            <form class="applyForm" style="display: none;">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email"><br>
+                <input type="submit" value="Submit" class="submitBtn">
+            </form>
+            <p class="successMessage" style="display: none;">Sent!</p>
+        </div>
+        <div class="opportunity" id="opportunity2">
+            <h3>Volunteer Opportunity 2</h3>
+            <p>Assist in managing social media accounts and online forums to facilitate discussions on local issues.
+                Time Commitment: 2-4 hours per week.
+                Skills Required: Familiarity with social media platforms, ability to moderate online discussions effectively.</p>
+            <button class="applyBtn">Apply</button>
+            <form class="applyForm" style="display: none;">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email"><br>
+                <input type="submit" value="Submit" class="submitBtn">
+            </form>
+            <p class="successMessage" style="display: none;">Sent!</p>
+        </div>
+    </section>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
+            var submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+
+            // Function to add announcement
+            addAnnouncementBtn.addEventListener('click', function() {
+                var announcementInput = document.getElementById('announcementInput').value;
+                if (announcementInput.trim() !== '') {
+                    var announcementList = document.getElementById('announcementList');
+                    var announcementItem = document.createElement('div');
+                    announcementItem.textContent = announcementInput;
+                    announcementList.appendChild(announcementItem);
+                    document.getElementById('announcementInput').value = '';
+                } else {
+                    alert('Please enter an announcement.');
+                }
+            });
+
+            // Function to submit feedback
+            submitFeedbackBtn.addEventListener('click', function() {
+                var selectedTopic = document.getElementById('topic').value;
+                var feedbackInput = document.getElementById('feedbackInput').value;
+                if (feedbackInput.trim() !== '') {
+                    var forumTopic = document.getElementById(selectedTopic);
+                    var feedbackItem = document.createElement('div');
+                    feedbackItem.textContent = feedbackInput;
+                    forumTopic.appendChild(feedbackItem);
+                    document.getElementById('feedbackInput').value = '';
+                } else {
+                    alert('Please enter your feedback.');
+                }
+            });
+
+            var applyBtns = document.querySelectorAll('.applyBtn');
+
+            applyBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var parent = btn.parentNode;
+                    var applyForm = parent.querySelector('.applyForm');
+                    var successMessage = parent.querySelector('.successMessage');
+                    applyForm.style.display = 'block';
+                    btn.style.display = 'none';
+                    successMessage.style.display = 'none'; // Hide success message if previously shown
+                });
+            });
+
+            var applyForms = document.querySelectorAll('.applyForm');
+
+            applyForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var successMessage = form.parentNode.querySelector('.successMessage');
+                    successMessage.style.display = 'block';
+                    form.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
